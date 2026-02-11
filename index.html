@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <title>NexusNode | Elite Minecraft Hosting</title>
+    <style>
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .gradient-text { background: linear-gradient(90deg, #4ade80, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body class="bg-[#0b0f1a] text-slate-200">
+
+    <nav class="flex justify-between items-center p-8 max-w-7xl mx-auto">
+        <div class="text-2xl font-black tracking-tighter italic">NEXUS<span class="text-green-500">NODE</span></div>
+        <div id="google_login_btn"></div> </nav>
+
+    <section class="text-center py-24 px-4">
+        <h1 class="text-6xl md:text-8xl font-black mb-6 tracking-tight">POWER BEYOND <br><span class="gradient-text">LIMITS</span></h1>
+        <p class="text-slate-400 text-xl max-w-2xl mx-auto">Enterprise Ryzen 9 7950X hardware. DDoS Protection. Instant Setup.</p>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-6 pb-24">
+        <h2 class="text-3xl font-bold mb-12 flex items-center gap-4">
+            <span class="h-1 w-12 bg-green-500 rounded-full"></span> Choose Your Tier
+        </h2>
+        
+        <div id="pricing-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            </div>
+    </section>
+
+    <script>
+        // 1. DATA FOR 10+ PLANS
+        const plans = [
+            { name: "Dirt", ram: "2GB", price: 4, cpu: "1 Core" },
+            { name: "Stone", ram: "4GB", price: 8, cpu: "2 Cores" },
+            { name: "Iron", ram: "6GB", price: 12, cpu: "2 Cores" },
+            { name: "Gold", ram: "8GB", price: 16, cpu: "3 Cores" },
+            { name: "Lapis", ram: "10GB", price: 20, cpu: "3 Cores" },
+            { name: "Redstone", ram: "12GB", price: 24, cpu: "4 Cores" },
+            { name: "Diamond", ram: "16GB", price: 32, cpu: "4 Cores" },
+            { name: "Emerald", ram: "20GB", price: 40, cpu: "6 Cores" },
+            { name: "Obsidian", ram: "32GB", price: 64, cpu: "8 Cores" },
+            { name: "Bedrock", ram: "64GB", price: 120, cpu: "16 Cores" }
+        ];
+
+        // 2. RENDER PLANS AUTOMATICALLY
+        const grid = document.getElementById('pricing-grid');
+        plans.forEach(plan => {
+            grid.innerHTML += `
+                <div class="glass p-8 rounded-3xl hover:border-green-500 transition-all duration-300 group">
+                    <h3 class="text-gray-400 font-medium uppercase tracking-widest text-sm">${plan.name} Tier</h3>
+                    <div class="text-4xl font-bold my-4">$${plan.price}<span class="text-lg text-slate-500 italic">/mo</span></div>
+                    <ul class="space-y-3 mb-8 text-slate-300">
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-green-500"></div> ${plan.ram} RAM</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div> ${plan.cpu}</li>
+                        <li class="flex items-center gap-2 text-slate-500">NVMe SSD Storage</li>
+                    </ul>
+                    <button class="w-full bg-white text-black font-bold py-4 rounded-2xl group-hover:bg-green-500 group-hover:text-white transition-colors">Deploy Now</button>
+                </div>
+            `;
+        });
+
+        // 3. GOOGLE LOGIN LOGIC
+        window.onload = function () {
+            google.accounts.id.initialize({
+                client_id: "YOUR_GOOGLE_CLIENT_ID_HERE.apps.googleusercontent.com",
+                callback: handleCredentialResponse
+            });
+            google.accounts.id.renderButton(
+                document.getElementById("google_login_btn"),
+                { theme: "outline", size: "large", shape: "pill", text: "continue_with" }
+            );
+        }
+
+        function handleCredentialResponse(response) {
+            console.log("Logged in! Token:", response.credential);
+            alert("Authentication Successful! Now redirecting to dashboard...");
+        }
+    </script>
+</body>
+</html>
